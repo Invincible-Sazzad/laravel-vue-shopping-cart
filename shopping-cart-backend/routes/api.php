@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Apis\CartController;
 use App\Http\Controllers\Apis\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,12 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
     Route::get('/', 'index');
     Route::get('/{product_id}', 'show');
     Route::post('/', 'search');
+});
+
+Route::controller(CartController::class)->prefix('cart')->group(function () {
+    Route::get('/{userId}', 'index');
+    Route::post('/', 'store');
+    Route::post('/update', 'updateQty');
+    Route::delete('/removeitem', 'destroyACartItem');
+    Route::post('/checkout', 'checkout');
 });
