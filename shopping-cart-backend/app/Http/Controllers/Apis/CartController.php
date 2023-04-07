@@ -126,4 +126,21 @@ class CartController extends Controller
             "message" => "Deletion failed!"
         ]);
     }
+
+    public function destroy($cartId)
+    {
+        $errorResult = $this->cartSevice->destroyACartWithItems($cartId);
+
+        if (! empty($errorResult)) {
+            return response()->json([
+                'error' => true,
+                'message' => $errorResult
+            ]);
+        }
+
+        return response()->json([
+            'error' => false,
+            'message' => 'Cart is removed successfuly'
+        ]);
+    }
 }
