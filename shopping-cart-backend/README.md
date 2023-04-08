@@ -1,25 +1,52 @@
-## About Laravel
+## Laravel Shopping Cart Backend
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Backend APIs developed in Laravel framework with JWT based authentication feature.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. First, install the composer dependencies
 
-## Learning Laravel
+    ```
+    composer install
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Install NPM dependencies
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    ```
+    npm install
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Copy the *.env.example* file and rename it to *.env*
 
-## License
+4. Generate an app encryption key
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```
+    php artisan key:generate
+    ```
+
+5. Create an empty database for our application
+
+6. In the *.env* file, add database information to allow Laravel to connect to the database
+
+7. Migrate the database
+
+    ```
+    php artisan migrate
+    ```
+
+8. Seed the database
+
+    ```
+    php artisan db:seed
+    ```
+
+9. Create the JWT secret key
+
+    ```
+    php artisan jwt:secret
+    ```
+    This command will create the following keys in your *.env* file:
+    ```
+    JWT_SECRET=******************************
+    JWT_ALGO=********
+    ```
