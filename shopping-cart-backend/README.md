@@ -50,3 +50,10 @@ Backend APIs developed in Laravel framework with JWT based authentication featur
     JWT_SECRET=******************************
     JWT_ALGO=********
     ```
+10. Run the application
+
+    ```
+    php artisan serve
+    ```
+
+    Now you will be able to make request to the routes specified in the `routes/api.php` file.
