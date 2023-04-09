@@ -17,10 +17,6 @@ module.exports = {
       padding: "2rem",
       center: true,
     },
-    screens: {
-      sm: "640px",
-      md: "760px",
-    },
   },
   variants: {
     extend: {},
