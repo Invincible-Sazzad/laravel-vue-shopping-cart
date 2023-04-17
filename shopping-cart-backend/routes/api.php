@@ -36,10 +36,10 @@ Route::middleware('auth:api')->group(function() {
 
     Route::controller(CartController::class)->prefix('cart')->group(function () {
         Route::get('/{userId}', 'index');
-        Route::post('/', 'store');
+        Route::post('/store', 'store');
         Route::post('/update', 'updateQty');
-        Route::delete('/removeitem', 'destroyACartItem');
+        Route::post('/removeitem', 'destroyACartItem');
         Route::post('/checkout', 'checkout');
-        Route::delete('/remove/{cartId}', 'destroy');
+        Route::post('/remove', 'destroy');
     });
 });

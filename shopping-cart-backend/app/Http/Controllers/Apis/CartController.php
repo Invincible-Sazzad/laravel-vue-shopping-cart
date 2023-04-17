@@ -127,8 +127,10 @@ class CartController extends Controller
         ]);
     }
 
-    public function destroy($cartId)
+    public function destroy(Request $request)
     {
+        $cartId = $request->cart_id;
+        
         $errorResult = $this->cartSevice->destroyACartWithItems($cartId);
 
         if (! empty($errorResult)) {
