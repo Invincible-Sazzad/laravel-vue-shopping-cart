@@ -4,10 +4,13 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useFlash } from '@/composables/useFlash';
+import { useCartStore } from '@/stores/cart';
 
 export const useAuthStore = defineStore('auth', () => {
   const router = useRouter();
   let { flash } = useFlash();
+
+  const cartStore = useCartStore();
 
   let user = ref(null);
   let token = ref(null);
@@ -23,7 +26,13 @@ export const useAuthStore = defineStore('auth', () => {
         this.user = result.user;
         this.token = result.authorisation.token;
 
-        router.push("/");
+        cartStore.fetchCartItems();
+
+        if (cartStore.cart.length > 0) {
+          router.push("cart");
+        } else {
+          router.push("/");
+        }
       } else {
         flash('error', 'Auth Error', result.message);
       }
@@ -75,7 +84,16 @@ export const useAuthStore = defineStore('auth', () => {
     });
   }
 
-  return { user, token, login, logout, isAuthenticated };
+  function getHeadersConfig() {
+    return {
+      headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token.value,
+      }
+    };
+  }
+
+  return { user, token, login, logout, isAuthenticated, getHeadersConfig };
 }, {
   persist: true,
 });

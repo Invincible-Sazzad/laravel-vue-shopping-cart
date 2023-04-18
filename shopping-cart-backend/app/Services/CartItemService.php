@@ -6,11 +6,6 @@ use App\Models\CartItem;
 
 class CartItemService
 {
-    public function __construct()
-    {
-        
-    }
-
     public function findItemsOfACart($cartId)
     {
         return CartItem::select('cart_items.id', 'cart_items.cart_id', 'cart_items.quantity', 
@@ -20,6 +15,14 @@ class CartItemService
                 ->join('products', 'cart_items.product_id', '=', 'products.id')
                 ->orderByDesc('cart_items.created_at')
                 ->get();
+    }
+
+    public function findAnItem($cartId, $productId)
+    {
+        return CartItem::where([
+            'cart_id' => $cartId,
+            'product_id' => $productId
+        ])->get();
     }
 
     public function create($cartId, $productId, $quantity)

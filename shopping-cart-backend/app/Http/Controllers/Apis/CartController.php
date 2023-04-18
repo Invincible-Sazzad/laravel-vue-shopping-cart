@@ -38,6 +38,15 @@ class CartController extends Controller
         if ($carts->count()) {
             $cart = $carts->first(); 
 
+            $foundItem = $this->cartItemService->findAnItem($cart->id, $productId);
+
+            if ($foundItem) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'The product is already added in your cart!'
+                ]);
+            }
+
             $item = $this->cartItemService->create($cart->id, $productId, $quantity);
 
             if ($item) {
@@ -57,13 +66,13 @@ class CartController extends Controller
         if ($hasError) {
             return response()->json([
                 'error' => true,
-                'message' => 'Cart can not be saved!'
+                'message' => 'Product can not be added to the cart!'
             ]);
         }
 
         return response()->json([
             'error' => false,
-            'message' => 'Cart saved successfully!'
+            'message' => 'The product is added to the cart successfully!'
         ]);
     }
 
@@ -117,13 +126,13 @@ class CartController extends Controller
         if ($affectedRows) {
             return response()->json([
                 "error" => false,
-                "message" => "Successfully deleted!"
+                "message" => "Product is removed successfully"
             ]);
         }
 
         return response()->json([
             "error" => true,
-            "message" => "Deletion failed!"
+            "message" => "The product can not be removed!"
         ]);
     }
 

@@ -9,22 +9,13 @@ export const useCartStore = defineStore('cart', () => {
     let router = useRouter();
     let { flash } = useFlash();
 
-    let cart = ref(null);
+    let cart = ref([]);
     let taxValue = ref(8);
 
     const authStore = useAuthStore();
 
-
-    const config = {
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + authStore.token,
-        }
-    };
-
     let itemCount = computed(() => {
-        // console.log(cart.value);
-        if (cart.value === null || cart.value.length === 0) {
+        if (cart.value.length === 0) {
             return 0;
         } else {
             return cart.value[0].cart_items.length;
@@ -32,13 +23,17 @@ export const useCartStore = defineStore('cart', () => {
     });
 
     let subtotalAmount = computed(() => {
-        if (cart.value === null || cart.value.length === 0) {
+        if (cart.value.length === 0) {
             return 0;
         } else {
             return cart.value[0].cart_items.reduce((sum, a) => {
                 return sum + (a.quantity * a.product.price)
             }, 0);
         }
+    });
+
+    let adjustedTax = computed(() => {
+        return (cart.value.length === 0) ? 0 : taxValue.value;
     });
 
 
@@ -52,6 +47,8 @@ export const useCartStore = defineStore('cart', () => {
         let errorStatus = '';
 
         redirectUnauthenticatedUser();
+
+        const config = authStore.getHeadersConfig();
 
         axios.get('http://localhost:8000/api/cart/' + authStore.user.id, config)
         .then(response => {
@@ -76,6 +73,8 @@ export const useCartStore = defineStore('cart', () => {
             flash('error', 'Auth Error', "User seems to be unauthenticated!");
             return;
         }
+
+        const config = authStore.getHeadersConfig();
 
         let payload = {
             "product_id": productId,
@@ -107,6 +106,8 @@ export const useCartStore = defineStore('cart', () => {
 
         redirectUnauthenticatedUser();
 
+        const config = authStore.getHeadersConfig();
+
         axios.post('http://localhost:8000/api/cart/removeitem', payload, config)
         .then(response => {
             if (! response.data.error) {
@@ -129,9 +130,9 @@ export const useCartStore = defineStore('cart', () => {
     function updateQty(payload) {
         let errorStatus = '';
 
-        console.log(payload);
-
         redirectUnauthenticatedUser();
+
+        const config = authStore.getHeadersConfig();
 
         axios.post('http://localhost:8000/api/cart/update', payload, config)
         .then(response => {
@@ -156,6 +157,8 @@ export const useCartStore = defineStore('cart', () => {
         let errorStatus = '';
 
         redirectUnauthenticatedUser();
+
+        const config = authStore.getHeadersConfig();
 
         axios.post('http://localhost:8000/api/cart/checkout', payload, config)
         .then(response => {
@@ -182,6 +185,8 @@ export const useCartStore = defineStore('cart', () => {
 
         redirectUnauthenticatedUser();
 
+        const config = authStore.getHeadersConfig();
+
         axios.post('http://localhost:8000/api/cart/remove', payload, config)
         .then(response => {
             if (! response.data.error) {
@@ -206,6 +211,7 @@ export const useCartStore = defineStore('cart', () => {
         taxValue, 
         itemCount, 
         subtotalAmount, 
+        adjustedTax,
         fetchCartItems, 
         addItemToCart, 
         updateQty, 
