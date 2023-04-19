@@ -6,7 +6,7 @@ let searchKey = ref('');
 </script>
 
 <template>
-    <div class="w-[500px]">
+    <div id="product_search" class="w-[500px]">
         <form @submit.prevent="$emit('handleSearch', searchKey)">   
             <div class="relative">
                 <input type="search" v-model="searchKey" class="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500" placeholder="Search by keyword...">

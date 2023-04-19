@@ -86,7 +86,7 @@ export const useCartStore = defineStore('cart', () => {
         .then(response => {
             if (! response.data.error) {
                 flash('success', 'Add Item', response.data.message);
-                router.push("cart");
+                router.push("/cart");
             } else {
                 flash('error', 'Item Add Error', response.data.message);
             }

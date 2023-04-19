@@ -29,9 +29,9 @@ class CartController extends Controller
     {
         $hasError = true;
 
-        $userId = $request->user_id;
-        $productId = $request->product_id;
-        $quantity = $request->quantity;
+        $userId = (int) $request->user_id;
+        $productId = (int) $request->product_id;
+        $quantity = (int) $request->quantity;
 
         $carts = $this->cartSevice->fetchActive($userId);
 
@@ -40,7 +40,7 @@ class CartController extends Controller
 
             $foundItem = $this->cartItemService->findAnItem($cart->id, $productId);
 
-            if ($foundItem) {
+            if ($foundItem->count() > 0) {
                 return response()->json([
                     'error' => true,
                     'message' => 'The product is already added in your cart!'
@@ -78,9 +78,9 @@ class CartController extends Controller
 
     public function updateQty(Request $request)
     {
-        $cartId = $request->cart_id;
-        $productId = $request->product_id;
-        $quantity = $request->quantity;
+        $cartId = (int) $request->cart_id;
+        $productId = (int) $request->product_id;
+        $quantity = (int) $request->quantity;
 
         $affectedRows = $this->cartItemService->update($cartId, $productId, $quantity);
 
@@ -99,7 +99,7 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-        $cartId = $request->cart_id;
+        $cartId = (int) $request->cart_id;
 
         $affectedRows = $this->cartSevice->update($cartId);
 
@@ -118,8 +118,8 @@ class CartController extends Controller
 
     public function destroyACartItem(Request $request)
     {
-        $cartId = $request->cart_id; 
-        $productId = $request->product_id;
+        $cartId = (int) $request->cart_id; 
+        $productId = (int) $request->product_id;
 
         $affectedRows = $this->cartItemService->destroy($cartId, $productId);
 
@@ -138,7 +138,7 @@ class CartController extends Controller
 
     public function destroy(Request $request)
     {
-        $cartId = $request->cart_id;
+        $cartId = (int) $request->cart_id;
         
         $errorResult = $this->cartSevice->destroyACartWithItems($cartId);
 
@@ -151,7 +151,7 @@ class CartController extends Controller
 
         return response()->json([
             'error' => false,
-            'message' => 'Cart is removed successfuly'
+            'message' => 'Cart items are cleared successfuly'
         ]);
     }
 }

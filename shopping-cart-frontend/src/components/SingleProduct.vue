@@ -29,7 +29,7 @@ function handAddToCart() {
 </script>
 
 <template>
-    <div class="m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="product-card m-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <RouterLink :to="{name: 'product_details', params: {id: props.product.id}}">
             <img class="p-2 rounded-t-lg w-[300px]" :src="props.product.image_url" alt="product image" />
         </RouterLink>
