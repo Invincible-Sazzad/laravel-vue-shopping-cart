@@ -18,7 +18,9 @@ export const useCartStore = defineStore('cart', () => {
         if (cart.value.length === 0) {
             return 0;
         } else {
-            return cart.value[0].cart_items.length;
+            return cart.value[0].cart_items.reduce((total, item) => {
+                return total + item.quantity
+            }, 0);
         }
     });
 
