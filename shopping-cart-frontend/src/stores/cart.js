@@ -137,7 +137,7 @@ export const useCartStore = defineStore('cart', () => {
         axios.post('http://localhost:8000/api/cart/update', payload, config)
         .then(response => {
             if (! response.data.error) {
-                flash('success', 'Update Quantity', response.data.message);
+                //flash('success', 'Update Quantity', response.data.message);
                 fetchCartItems();
             } else {
                 flash('error', 'Update Error', response.data.message);
